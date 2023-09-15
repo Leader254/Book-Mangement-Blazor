@@ -7,16 +7,19 @@
     <div class="form-group">
         <label for="title">Title</label>
         <InputText id="title" class="form-control" @bind-Value="@book.Title" />
+        <ValidationMessage For="@(() => book.Title)" />
     </div>
 
     <div class="form-group">
         <label for="description">Description</label>
         <InputTextArea id="description" class="form-control" @bind-Value="@book.Description" />
+<ValidationMessage For="@(() => book.Description)" />
     </div>
 
     <div class="form-group">
         <label for="authors">Authors</label>
         <InputText id="authorsInput" class="form-control" @bind-Value="@authorInput" />
+<ValidationMessage For="@(() => authorInput)" />
     </div>
 
     @if (IsEdit)
