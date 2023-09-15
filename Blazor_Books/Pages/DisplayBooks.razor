@@ -1,0 +1,45 @@
+﻿<h3>Your Books Store</h3>
+<div class="card col-6">
+    <div class="card-header">
+        @Book.Title
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">@Book.Description</h5>
+        <p>Authors:</p>
+        <ul>
+            @foreach (var author in Book.Author)
+            {
+                <li>@author</li>
+            }
+        </ul>
+        <div class="flex-column justify-content-around">
+            <button @onclick="(() => HandleEdit(Book))" class="btn btn-primary">Edit</button>
+            <button></button>
+            <button @onclick="HandleDelete" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+   
+</div>
+
+@code {
+    [Parameter]
+    public Books Book { get; set; }
+
+    [Parameter]
+    public EventCallback<Books> OnDelete { get; set; }
+
+    [Parameter]
+    public EventCallback<Books> OnEdit { get; set; }
+
+private async Task HandleDelete()
+    {
+        await OnDelete.InvokeAsync(Book);
+    }
+
+    private async Task HandleEdit(Books book)
+{
+        await OnEdit.InvokeAsync(Book);
+    }
+
+
+}

@@ -1,0 +1,55 @@
+﻿@page "/"
+
+<div class="row">
+<div class="col-md-4">
+        <h3>Add Book</h3>
+        <AddBook OnValidSubmit="@HandleAddBook" UpdateBook="updateBook" OnBookUpdate="Updating" />
+    </div>
+    <div class="col-md-8">
+        @*loop through the list of books*@
+        @foreach (var book in books)
+        {
+            <DisplayBooks Book="@book"  OnDelete="HandleDeleteBook" OnEdit="HandleBookEdit"/>
+        }
+    </div>
+</div>
+
+@code {
+    private List<Books> books = new List<Books>();
+
+    public Books updateBook;
+
+    private async Task HandleAddBook(Books book)
+    {
+        this.books.Add(book);
+    }
+
+    private async Task HandleDeleteBook(Books book)
+    {
+        try
+        {
+            var bookToDelete = books.FirstOrDefault(x => x.Id == book.Id);
+            books.Remove(bookToDelete);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    private async Task HandleBookEdit(Books book)
+    {
+        updateBook = book;
+    }
+
+    private async Task Updating(Books book)
+    {
+        var index = books.IndexOf(book);
+            books[index] = book;
+            updateBook = null;
+    }
+
+
+
+    
+}

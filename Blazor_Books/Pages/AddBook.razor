@@ -1,0 +1,85 @@
+﻿<EditForm Model="@book" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="text-danger">
+        <ValidationSummary />
+    </div>
+
+    <div class="form-group">
+        <label for="title">Title</label>
+        <InputText id="title" class="form-control" @bind-Value="@book.Title" />
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description</label>
+        <InputTextArea id="description" class="form-control" @bind-Value="@book.Description" />
+    </div>
+
+    <div class="form-group">
+        <label for="authors">Authors</label>
+        <InputText id="authorsInput" class="form-control" @bind-Value="@authorInput" />
+    </div>
+
+    @if (IsEdit)
+    {
+        <button type="submit" class="btn btn-primary" @onclick="HandleBookUpdate">Update</button>
+    }
+    else
+    {
+        <button type="submit" class="btn btn-primary">Add Book</button>
+    }
+</EditForm>
+
+
+
+@code {
+    private Books book = new Books()
+        {
+            Id = new Random().Next(1, 1000)
+        };
+    private List<int> selectedAuthors = new List<int>();
+    private string authorInput = string.Empty;
+
+    public bool IsEdit { get; set; } = false;
+
+    [Parameter]
+    public EventCallback<Books> OnValidSubmit { get; set; }
+
+    [Parameter]
+    public EventCallback<Books> OnBookUpdate { get; set; }
+
+    [Parameter]
+    public Books UpdateBook
+    {
+        get => book;
+        set
+        {
+            if (value != null)
+            {
+                book = value;
+                authorInput = string.Join(",", book.Author);
+            }
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await OnValidSubmit.InvokeAsync(book);
+
+        // reset the book
+        book = new Books()
+        {
+            Id = new Random().Next(1, 1000)
+        };
+    }
+
+    private async Task HandleBookUpdate()
+        {
+            await OnBookUpdate.InvokeAsync(book);
+
+            // reset the book
+            book = new Books()
+                    {
+                        Id = new Random().Next(1, 1000)
+                    };
+        }
+}
