@@ -1,9 +1,5 @@
 ﻿<EditForm Model="@book" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
-    <div class="text-danger">
-        <ValidationSummary />
-    </div>
-
     <div class="form-group">
         <label for="title">Title</label>
         <InputText id="title" class="form-control" @bind-Value="@book.Title" />
@@ -16,10 +12,20 @@
 <ValidationMessage For="@(() => book.Description)" />
     </div>
 
+    @{
+        var i = 0;
+    }
     <div class="form-group">
-        <label for="authors">Authors</label>
-        <InputText id="authorsInput" class="form-control" @bind-Value="@authorInput" />
-<ValidationMessage For="@(() => authorInput)" />
+        @foreach(var author in book.Author)
+        {
+            i++;
+            author.Id = i;
+            <div class="input-group mb-3">
+                <InputText id="authors" class="form-control" @bind-Value="@author.Name" />
+            </div>
+            
+        }
+        <button type="button" onclick="@(()=>book.Author.Add(new Author()))" class=" mt-4 btn btn-primary">Add Author </button>
     </div>
 
     @if (IsEdit)
@@ -56,11 +62,8 @@
         get => book;
         set
         {
-            if (value != null)
-            {
-                book = value;
-                authorInput = string.Join(",", book.Author);
-            }
+            book = value ?? book;
+            IsEdit = value != null;
         }
     }
 
@@ -81,8 +84,8 @@
 
             // reset the book
             book = new Books()
-                    {
-                        Id = new Random().Next(1, 1000)
-                    };
+            {
+                Id = new Random().Next(1, 1000)
+            };
         }
 }

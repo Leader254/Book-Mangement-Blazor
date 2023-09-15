@@ -9,12 +9,11 @@
         <ul>
             @foreach (var author in Book.Author)
             {
-                <li>@author</li>
+                <li>@author.Name</li>
             }
         </ul>
         <div class="flex-column justify-content-around">
             <button @onclick="(() => HandleEdit(Book))" class="btn btn-primary">Edit</button>
-            <button></button>
             <button @onclick="HandleDelete" class="btn btn-danger">Delete</button>
         </div>
     </div>
@@ -38,7 +37,7 @@ private async Task HandleDelete()
 
     private async Task HandleEdit(Books book)
 {
-        await OnEdit.InvokeAsync(Book);
+        await OnEdit.InvokeAsync(book);
     }
 
 
