@@ -7,6 +7,7 @@
     </div>
     <div class="col-md-8">
         @*loop through the list of books*@
+        <h3>Your Books Store</h3>
         @foreach (var book in books)
         {
             <DisplayBooks Book="@book"  OnDelete="HandleDeleteBook" OnEdit="HandleBookEdit"/>

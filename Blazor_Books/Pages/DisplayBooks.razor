@@ -1,5 +1,5 @@
 ﻿<h3>Your Books Store</h3>
-<div class="card col-6">
+@*<div class="card col-6">
     <div class="card-header">
         @Book.Title
     </div>
@@ -18,7 +18,38 @@
         </div>
     </div>
    
-</div>
+</div>*@
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Authors</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Book.Title</td>
+            <td>@Book.Description</td>
+            
+            <td>
+                @string.Join(", ", Book.Author.Select(author => author.Name))
+            </td>
+
+
+            <td>
+                <button @onclick="(() => HandleEdit(Book))" class="btn btn-primary">Edit</button>
+                <button @onclick="HandleDelete" class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+
+
+
+</table>
+
 
 @code {
     [Parameter]
@@ -30,13 +61,13 @@
     [Parameter]
     public EventCallback<Books> OnEdit { get; set; }
 
-private async Task HandleDelete()
+    private async Task HandleDelete()
     {
         await OnDelete.InvokeAsync(Book);
     }
 
     private async Task HandleEdit(Books book)
-{
+    {
         await OnEdit.InvokeAsync(book);
     }
 
