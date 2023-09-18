@@ -7,7 +7,14 @@
     </div>
     <div class="col-md-8">
         @*loop through the list of books*@
-        <h3>Your Books Store</h3>
+        @if(books.Count() == 0)
+        {
+            <h3>Your Books Store has No Books</h3>
+        }
+        else
+        {
+            <h3>Youk Books Store has @books.Count() Books</h3>
+        }
         @foreach (var book in books)
         {
             <DisplayBooks Book="@book"  OnDelete="HandleDeleteBook" OnEdit="HandleBookEdit"/>

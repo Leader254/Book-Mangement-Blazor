@@ -9,23 +9,25 @@
     <div class="form-group">
         <label for="description">Description</label>
         <InputTextArea id="description" class="form-control" @bind-Value="@book.Description" />
-<ValidationMessage For="@(() => book.Description)" />
+        <ValidationMessage For="@(() => book.Description)" />
     </div>
 
     @{
         var i = 0;
     }
-    <div class="form-group">
+    <div class="form-group mt-1">
+        <label for="author(s)">Author(s)</label>
         @foreach(var author in book.Author)
         {
             i++;
             author.Id = i;
-            <div class="input-group mb-3">
+            <div class="input-group mb-2">
                 <InputText id="authors" class="form-control" @bind-Value="@author.Name" />
             </div>
             
         }
-        <button type="button" onclick="@(()=>book.Author.Add(new Author()))" class=" mt-4 btn btn-primary">Add Author </button>
+        <ValidationMessage For="@(() => book.Author)" />
+        
     </div>
 
     @if (IsEdit)
@@ -34,7 +36,8 @@
     }
     else
     {
-        <button type="submit" class="btn btn-primary">Add Book</button>
+        <button type="button" onclick="@(()=>book.Author.Add(new Author()))" class=" mt-2 btn btn-primary">Add Author </button>
+        <button type="submit" class="btn btn-primary mt-2">Add Book</button>
     }
 </EditForm>
 

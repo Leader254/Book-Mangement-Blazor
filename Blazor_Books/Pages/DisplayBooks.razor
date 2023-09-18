@@ -1,25 +1,4 @@
-﻿<h3>Your Books Store</h3>
-@*<div class="card col-6">
-    <div class="card-header">
-        @Book.Title
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">@Book.Description</h5>
-        <p>Authors:</p>
-        <ul>
-            @foreach (var author in Book.Author)
-            {
-                <li>@author.Name</li>
-            }
-        </ul>
-        <div class="flex-column justify-content-around">
-            <button @onclick="(() => HandleEdit(Book))" class="btn btn-primary">Edit</button>
-            <button @onclick="HandleDelete" class="btn btn-danger">Delete</button>
-        </div>
-    </div>
-   
-</div>*@
-
+﻿
 <table class="table table-striped">
     <thead>
         <tr>
